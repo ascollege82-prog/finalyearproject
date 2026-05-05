@@ -52,6 +52,8 @@ const Maintenance = lazy(() => import('./pages/Maintenance'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const Jobs = lazy(() => import('./pages/Jobs'));
+const Profile = lazy(() => import('./pages/Profile'));
 
 // Global Styles
 const GlobalStyle = createGlobalStyle`
@@ -293,6 +295,8 @@ function App() {
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/jobs" element={<Jobs />} />
+                  <Route path="/profile" element={<Profile />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>

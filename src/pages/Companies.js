@@ -1,18 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import { companyService } from '../services/api';
+import { toast } from 'react-hot-toast';
 
-const partners = [
-  { name: 'TechNova', logo: '', url: '#' },
-  { name: 'InnoSoft', logo: '', url: '#' },
-  { name: 'DataWorks', logo: '', url: '#' },
-  { name: 'Cloudify', logo: '', url: '#' },
-  { name: 'NextGen', logo: '', url: '#' },
-  { name: 'CyberEdge', logo: '', url: '#' },
-  { name: 'GreenAI', logo: '', url: '#' },
-  { name: 'FinTechX', logo: '', url: '#' },
-];
 
 const stats = [
   { label: 'Partner Companies', value: '50+' },
@@ -199,6 +191,33 @@ const CTAButton = styled.a`
 `;
 
 const Companies = () => {
+  const [partners, setPartners] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCompanies();
+  }, []);
+
+  const fetchCompanies = async () => {
+    try {
+      const res = await companyService.getCompanies();
+      if (res.data.success) {
+        setPartners(res.data.data);
+      }
+    } catch (err) {
+      console.error(err);
+      // Fallback to static if API fails for some reason
+      setPartners([
+        { name: 'TechNova', url: '#' },
+        { name: 'InnoSoft', url: '#' },
+        { name: 'DataWorks', url: '#' },
+        { name: 'Cloudify', url: '#' },
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Helmet>

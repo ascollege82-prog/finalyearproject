@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSearch, FiMenu, FiX, FiChevronDown, FiUser, FiGlobe, FiArrowRight } from 'react-icons/fi';
@@ -709,7 +709,15 @@ const Header = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const searchRef = useRef(null);
+  const token = localStorage.getItem('token');
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    toast.success('Logged out successfully');
+    navigate('/login');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -873,8 +881,18 @@ const Header = () => {
         </SearchContainer>
 
         <AuthButtons>
-          <LoginButton to="/login">Login</LoginButton>
-          <SignUpButton to="/register">Sign Up</SignUpButton>
+          {token ? (
+            <>
+              <NavLink to="/jobs">Jobs</NavLink>
+              <NavLink to="/profile">Profile</NavLink>
+              <SignUpButton as="button" onClick={handleLogout}>Logout</SignUpButton>
+            </>
+          ) : (
+            <>
+              <LoginButton to="/login">Login</LoginButton>
+              <SignUpButton to="/register">Sign Up</SignUpButton>
+            </>
+          )}
         </AuthButtons>
         
         <MobileMenuButton onClick={() => {
@@ -956,12 +974,24 @@ const Header = () => {
 
               {/* Auth Section */}
               <MobileNavSection style={{ padding: '1rem 1.5rem', gap: '1rem' }}>
-                <MobileNavLink to="/login" style={{ textAlign: 'center', background: 'rgba(255,255,255,0.05)', borderRadius: '12px' }}>
-                  Login
-                </MobileNavLink>
-                <MobileNavLink to="/register" style={{ textAlign: 'center', background: 'var(--gradient-primary)', color: 'var(--background)', borderRadius: '12px' }}>
-                  Sign Up
-                </MobileNavLink>
+                {token ? (
+                  <>
+                    <MobileNavLink to="/profile">My Profile</MobileNavLink>
+                    <MobileNavLink to="/jobs">Job Portal</MobileNavLink>
+                    <MobileNavLink to="#" onClick={handleLogout} style={{ textAlign: 'center', background: 'rgba(255,0,0,0.1)', borderRadius: '12px' }}>
+                      Logout
+                    </MobileNavLink>
+                  </>
+                ) : (
+                  <>
+                    <MobileNavLink to="/login" style={{ textAlign: 'center', background: 'rgba(255,255,255,0.05)', borderRadius: '12px' }}>
+                      Login
+                    </MobileNavLink>
+                    <MobileNavLink to="/register" style={{ textAlign: 'center', background: 'var(--gradient-primary)', color: 'var(--background)', borderRadius: '12px' }}>
+                      Sign Up
+                    </MobileNavLink>
+                  </>
+                )}
               </MobileNavSection>
             </MobileNav>
             
