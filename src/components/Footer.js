@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FiMail, FiArrowRight, FiHeart } from 'react-icons/fi';
 import { FaDiscord, FaTwitter, FaLinkedin, FaGithub, FaYoutube } from 'react-icons/fa';
+import { toast } from 'react-hot-toast';
 import MavenLogo from '../assets/maven.png';
 
 const FooterContainer = styled.footer`
@@ -212,6 +213,15 @@ const Footer = () => {
     e.preventDefault();
     // Handle newsletter subscription
     console.log('Newsletter subscription:', email);
+    toast.success('Subscribed successfully! Welcome to the future.', {
+      icon: '🚀',
+      style: {
+        borderRadius: '10px',
+        background: 'var(--surface)',
+        color: 'var(--primary)',
+        border: '1px solid var(--primary)',
+      },
+    });
     setEmail('');
   };
 
