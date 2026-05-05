@@ -51,6 +51,7 @@ const Training = lazy(() => import('./pages/Training'));
 const Maintenance = lazy(() => import('./pages/Maintenance'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 
 // Global Styles
 const GlobalStyle = createGlobalStyle`
@@ -291,6 +292,7 @@ function App() {
                   <Route path="/services/maintenance" element={<Maintenance />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
+                  <Route path="/admin" element={<AdminDashboard />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
