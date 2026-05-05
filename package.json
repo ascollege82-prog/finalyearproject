@@ -29,8 +29,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "start-backend": "node index.js",
+    "start": "node index.js",
     "build": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "dev": "nodemon index.js",
     "test": "react-scripts test"
