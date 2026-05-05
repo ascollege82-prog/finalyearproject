@@ -167,6 +167,47 @@ const CollaboratorsButton = styled(Link)`
   }
 `;
 
+const AuthButtons = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 1.5rem;
+  
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+
+const LoginButton = styled(Link)`
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    color: var(--primary);
+  }
+`;
+
+const SignUpButton = styled(Link)`
+  background: var(--gradient-primary);
+  color: var(--background);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+    filter: brightness(1.1);
+  }
+`;
+
 const DropdownMenu = styled.div`
   position: absolute;
   top: 100%;
@@ -830,6 +871,11 @@ const Header = () => {
             </SearchResults>
           )}
         </SearchContainer>
+
+        <AuthButtons>
+          <LoginButton to="/login">Login</LoginButton>
+          <SignUpButton to="/register">Sign Up</SignUpButton>
+        </AuthButtons>
         
         <MobileMenuButton onClick={() => {
           console.log('Mobile menu clicked, current state:', mobileMenuOpen);
@@ -906,6 +952,16 @@ const Header = () => {
                 <MobileNavLink to="/whitepapers">Whitepapers</MobileNavLink>
                 <MobileNavLink to="/documentation">Documentation</MobileNavLink>
                 <MobileNavLink to="/support">Support</MobileNavLink>
+              </MobileNavSection>
+
+              {/* Auth Section */}
+              <MobileNavSection style={{ padding: '1rem 1.5rem', gap: '1rem' }}>
+                <MobileNavLink to="/login" style={{ textAlign: 'center', background: 'rgba(255,255,255,0.05)', borderRadius: '12px' }}>
+                  Login
+                </MobileNavLink>
+                <MobileNavLink to="/register" style={{ textAlign: 'center', background: 'var(--gradient-primary)', color: 'var(--background)', borderRadius: '12px' }}>
+                  Sign Up
+                </MobileNavLink>
               </MobileNavSection>
             </MobileNav>
             
