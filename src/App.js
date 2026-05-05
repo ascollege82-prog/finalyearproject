@@ -50,6 +50,7 @@ const TechnicalSupport = lazy(() => import('./pages/Support'));
 const Training = lazy(() => import('./pages/Training'));
 const Maintenance = lazy(() => import('./pages/Maintenance'));
 const Login = lazy(() => import('./pages/Login'));
+const Register = lazy(() => import('./pages/Register'));
 
 // Global Styles
 const GlobalStyle = createGlobalStyle`
@@ -288,6 +289,8 @@ function App() {
                   <Route path="/services/support" element={<TechnicalSupport />} />
                   <Route path="/services/training" element={<Training />} />
                   <Route path="/services/maintenance" element={<Maintenance />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>

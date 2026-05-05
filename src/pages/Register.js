@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FiMail, FiLock, FiArrowRight } from 'react-icons/fi';
+import { FiUser, FiMail, FiLock, FiArrowRight, FiCheckCircle } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 
 const PageContainer = styled.div`
@@ -20,9 +20,9 @@ const BackgroundGlow = styled.div`
   position: absolute;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(0, 102, 255, 0.1) 0%, transparent 70%);
-  bottom: -250px;
-  left: -250px;
+  background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
+  top: -250px;
+  right: -250px;
   pointer-events: none;
 `;
 
@@ -92,6 +92,22 @@ const Input = styled.input`
   }
 `;
 
+const Select = styled.select`
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.8rem 1rem 0.8rem 3rem;
+  color: white;
+  font-size: 1rem;
+  appearance: none;
+  cursor: pointer;
+  
+  option {
+    background: #1a1a1a;
+  }
+`;
+
 const SubmitButton = styled(motion.button)`
   background: var(--gradient-primary);
   color: var(--background);
@@ -124,10 +140,12 @@ const FooterText = styled.p`
   }
 `;
 
-const Login = () => {
+const Register = () => {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    role: 'student'
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -137,7 +155,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1'}/auth/login`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1'}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -146,11 +164,11 @@ const Login = () => {
       const data = await res.json();
 
       if (data.success) {
-        toast.success('Welcome back!');
+        toast.success('Registration successful! Welcome aboard.');
         localStorage.setItem('token', data.token);
         navigate('/');
       } else {
-        toast.error(data.message || 'Login failed');
+        toast.error(data.error || 'Registration failed');
       }
     } catch (err) {
       toast.error('Server error. Please try again.');
@@ -167,10 +185,21 @@ const Login = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Title>Welcome Back</Title>
-        <Subtitle>Enter your credentials to access the future.</Subtitle>
+        <Title>Join Maven</Title>
+        <Subtitle>Start your journey into the future today.</Subtitle>
         
         <Form onSubmit={handleSubmit}>
+          <InputGroup>
+            <InputIcon><FiUser /></InputIcon>
+            <Input 
+              type="text" 
+              placeholder="Full Name" 
+              required
+              value={formData.name}
+              onChange={(e) => setFormData({...formData, name: e.target.value})}
+            />
+          </InputGroup>
+
           <InputGroup>
             <InputIcon><FiMail /></InputIcon>
             <Input 
@@ -193,22 +222,33 @@ const Login = () => {
             />
           </InputGroup>
 
+          <InputGroup>
+            <InputIcon><FiCheckCircle /></InputIcon>
+            <Select 
+              value={formData.role}
+              onChange={(e) => setFormData({...formData, role: e.target.value})}
+            >
+              <option value="student">Student</option>
+              <option value="recruiter">Recruiter</option>
+            </Select>
+          </InputGroup>
+
           <SubmitButton
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             disabled={loading}
           >
-            {loading ? 'Authenticating...' : 'Login'}
+            {loading ? 'Processing...' : 'Create Account'}
             <FiArrowRight />
           </SubmitButton>
         </Form>
 
         <FooterText>
-          Don't have an account? <Link to="/register">Sign Up</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </FooterText>
       </FormCard>
     </PageContainer>
   );
 };
 
-export default Login;
+export default Register;
