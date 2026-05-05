@@ -208,11 +208,13 @@ const Logo = styled(Link)`
 
 const Footer = () => {
   const [email, setEmail] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
-    toast.success('Subscribed successfully!');
     console.log('Newsletter subscription:', email);
+    setIsSubscribed(true);
+    toast.success('Welcome to the future!');
     setEmail('');
   };
 
@@ -270,19 +272,36 @@ const Footer = () => {
             <p>
               Pioneering the future of technology with cutting-edge solutions that transform businesses and drive innovation across industries.
             </p>
-            <NewsletterForm onSubmit={handleNewsletterSubmit}>
-              <NewsletterInput
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <NewsletterButton type="submit">
-                Subscribe
-                <FiArrowRight />
-              </NewsletterButton>
-            </NewsletterForm>
+            {isSubscribed ? (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{ 
+                  color: 'var(--primary)', 
+                  fontWeight: '600', 
+                  marginTop: '1rem',
+                  display: 'flex',
+                  alignSelf: 'center',
+                  gap: '0.5rem'
+                }}
+              >
+                <span>✓</span> Subscribed Successfully!
+              </motion.div>
+            ) : (
+              <NewsletterForm onSubmit={handleNewsletterSubmit}>
+                <NewsletterInput
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <NewsletterButton type="submit">
+                  Subscribe
+                  <FiArrowRight />
+                </NewsletterButton>
+              </NewsletterForm>
+            )}
             <SocialLinks>
               <a href="#" aria-label="Discord">
                 <FaDiscord />
