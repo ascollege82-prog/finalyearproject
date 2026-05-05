@@ -1,0 +1,64 @@
+{
+  "name": "maven-website",
+  "version": "1.0.0",
+  "description": "Futuristic, sleek, and high-performance website for Maven",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^13.5.0",
+    "ajv": "^8.18.0",
+    "framer-motion": "^10.0.0",
+    "lottie-react": "^2.3.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-helmet-async": "^1.3.0",
+    "react-hook-form": "^7.43.9",
+    "react-hot-toast": "^2.4.0",
+    "react-icons": "^4.8.0",
+    "react-intersection-observer": "^9.4.3",
+    "react-lazy-load-image-component": "^1.6.0",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "react-spring": "^9.7.3",
+    "react-syntax-highlighter": "^15.5.0",
+    "react-use": "^17.3.2",
+    "styled-components": "^5.3.9",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "cross-env ESLINT_NO_DEV_ERRORS=true react-scripts start",
+    "dev": "cross-env ESLINT_NO_DEV_ERRORS=true react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "rules": {
+      "no-unused-vars": "warn",
+      "no-console": "off"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "cross-env": "^7.0.3"
+  }
+}

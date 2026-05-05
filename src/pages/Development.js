@@ -1,0 +1,359 @@
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { FiArrowRight, FiCheck, FiCode, FiSmartphone, FiGlobe, FiDatabase, FiZap } from 'react-icons/fi';
+
+// Animations
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const float = keyframes`
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+`;
+
+// Styled Components
+const PageContainer = styled.div`
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  padding-top: 100px;
+`;
+
+const HeroSection = styled.section`
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 255, 0.1) 100%);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(0,255,136,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+  }
+`;
+
+const HeroTitle = styled.h1`
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+`;
+
+const HeroSubtitle = styled.p`
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+`;
+
+const ContentSection = styled.section`
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+`;
+
+const SectionTitle = styled.h2`
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: white;
+`;
+
+const ServiceGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+`;
+
+const ServiceCard = styled(motion.div)`
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00ff88 0%, #00ccff 50%, #ff0066 100%);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
+    border-color: rgba(0, 255, 136, 0.3);
+    
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+`;
+
+const ServiceIcon = styled.div`
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 204, 255, 0.2) 100%);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: var(--primary);
+  animation: ${float} 3s ease-in-out infinite;
+`;
+
+const ServiceTitle = styled.h3`
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+`;
+
+const ServiceDescription = styled.p`
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+`;
+
+const ServiceFeatures = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`;
+
+const ServiceFeature = styled.li`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  
+  svg {
+    color: var(--primary);
+    font-size: 0.8rem;
+  }
+`;
+
+const TechStackSection = styled.section`
+  margin: 4rem 0;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 204, 255, 0.05) 100%);
+  border-radius: 20px;
+`;
+
+const TechGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+`;
+
+const TechCard = styled.div`
+  text-align: center;
+  padding: 1.5rem;
+  
+  h3 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  
+  p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+`;
+
+const CTAButton = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+  color: #000;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(0, 255, 136, 0.4);
+  }
+`;
+
+const Development = () => {
+  const services = [
+    {
+      id: 1,
+      title: 'Custom Applications',
+      description: 'Tailored software solutions designed specifically for your business needs and workflows.',
+      features: [
+        'Enterprise Applications',
+        'Business Process Automation',
+        'Custom Dashboards',
+        'Integration Services'
+      ],
+      icon: <FiCode />
+    },
+    {
+      id: 2,
+      title: 'Web Development',
+      description: 'Modern, responsive web applications built with cutting-edge technologies and best practices.',
+      features: [
+        'Frontend Development',
+        'Backend Systems',
+        'E-commerce Solutions',
+        'Progressive Web Apps'
+      ],
+      icon: <FiGlobe />
+    },
+    {
+      id: 3,
+      title: 'Mobile Apps',
+      description: 'Native and cross-platform mobile applications for iOS and Android platforms.',
+      features: [
+        'iOS Development',
+        'Android Development',
+        'Cross-platform Apps',
+        'App Store Optimization'
+      ],
+      icon: <FiSmartphone />
+    },
+    {
+      id: 4,
+      title: 'API Development',
+      description: 'Robust and scalable APIs to power your applications and enable seamless integrations.',
+      features: [
+        'RESTful APIs',
+        'GraphQL Services',
+        'Microservices',
+        'API Documentation'
+      ],
+      icon: <FiDatabase />
+    }
+  ];
+
+  const techStack = [
+    {
+      category: 'Frontend',
+      technologies: 'React, Angular, Vue.js, Next.js'
+    },
+    {
+      category: 'Backend',
+      technologies: 'Node.js, Python, Java, .NET'
+    },
+    {
+      category: 'Mobile',
+      technologies: 'React Native, Flutter, Swift, Kotlin'
+    },
+    {
+      category: 'Database',
+      technologies: 'PostgreSQL, MongoDB, MySQL, Redis'
+    },
+    {
+      category: 'Cloud',
+      technologies: 'AWS, Azure, Google Cloud, Docker'
+    },
+    {
+      
+      technologies: 'CI/CD, Kubernetes, Terraform, Jenkins'
+    }
+  ];
+
+  return (
+    <PageContainer>
+      <HeroSection>
+        <HeroTitle>Software Development</HeroTitle>
+        <HeroSubtitle>
+          Custom software development services tailored to your specific business needs and requirements. 
+          From web applications to mobile apps, we build solutions that drive your business forward.
+        </HeroSubtitle>
+      </HeroSection>
+
+      <ContentSection>
+        <SectionTitle>Our Development Services</SectionTitle>
+        <ServiceGrid>
+          {services.map((service, index) => (
+            <ServiceCard
+              key={service.id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <ServiceIcon>{service.icon}</ServiceIcon>
+              <ServiceTitle>{service.title}</ServiceTitle>
+              <ServiceDescription>{service.description}</ServiceDescription>
+              <ServiceFeatures>
+                {service.features.map((feature, idx) => (
+                  <ServiceFeature key={idx}>
+                    <FiCheck />
+                    {feature}
+                  </ServiceFeature>
+                ))}
+              </ServiceFeatures>
+            </ServiceCard>
+          ))}
+        </ServiceGrid>
+
+        <TechStackSection>
+          <SectionTitle>Our Technology Stack</SectionTitle>
+          <TechGrid>
+            {techStack.map((tech, index) => (
+              <TechCard key={index}>
+                <h3>{tech.category}</h3>
+                <p>{tech.technologies}</p>
+              </TechCard>
+            ))}
+          </TechGrid>
+        </TechStackSection>
+
+        <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+          <CTAButton to="/contact">
+            Start Your Project <FiArrowRight />
+          </CTAButton>
+        </div>
+      </ContentSection>
+    </PageContainer>
+  );
+};
+
+export default Development; 
