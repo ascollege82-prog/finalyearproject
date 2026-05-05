@@ -6,6 +6,9 @@ import { Toaster } from 'react-hot-toast';
 import styled, { createGlobalStyle } from 'styled-components';
 import ChatBot from './components/ChatBot';
 
+// API Configuration
+export const API_URL = process.env.REACT_APP_API_URL || import.meta.env?.VITE_API_URL || 'http://localhost:5000/api/v1';
+
 // Lazy load components for better performance
 const Header = lazy(() => import('./components/Header'));
 const Footer = lazy(() => import('./components/Footer'));
