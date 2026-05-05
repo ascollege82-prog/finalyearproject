@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FiMail, FiLock, FiArrowRight } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
+import { authService } from '../services/api';
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -137,13 +138,8 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1'}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await res.json();
+      const res = await authService.login(formData);
+      const data = res.data;
 
       if (data.success) {
         toast.success('Welcome back!');
@@ -153,7 +149,7 @@ const Login = () => {
         toast.error(data.message || 'Login failed');
       }
     } catch (err) {
-      toast.error('Server error. Please try again.');
+      toast.error(err.response?.data?.message || 'Invalid credentials. Please try again.');
     } finally {
       setLoading(false);
     }

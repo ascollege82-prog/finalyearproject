@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FiUser, FiMail, FiLock, FiArrowRight, FiCheckCircle } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
+import { authService } from '../services/api';
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -155,13 +156,8 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1'}/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await res.json();
+      const res = await authService.register(formData);
+      const data = res.data;
 
       if (data.success) {
         toast.success('Registration successful! Welcome aboard.');
@@ -171,7 +167,7 @@ const Register = () => {
         toast.error(data.error || 'Registration failed');
       }
     } catch (err) {
-      toast.error('Server error. Please try again.');
+      toast.error(err.response?.data?.error || 'Server error. Please try again.');
     } finally {
       setLoading(false);
     }
