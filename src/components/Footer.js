@@ -211,17 +211,8 @@ const Footer = () => {
 
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
-    // Handle newsletter subscription
+    toast.success('Subscribed successfully!');
     console.log('Newsletter subscription:', email);
-    toast.success('Subscribed successfully! Welcome to the future.', {
-      icon: '🚀',
-      style: {
-        borderRadius: '10px',
-        background: 'var(--surface)',
-        color: 'var(--primary)',
-        border: '1px solid var(--primary)',
-      },
-    });
     setEmail('');
   };
 
