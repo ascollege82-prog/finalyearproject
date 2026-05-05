@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiSearch, FiMenu, FiX, FiChevronDown, FiUser, FiGlobe, FiArrowRight } from 'react-icons/fi';
+import { FiSearch, FiMenu, FiX, FiChevronDown, FiArrowRight } from 'react-icons/fi';
+import { AuthContext } from '../context/AuthContext';
 
 import LundLogo from '../assets/maven.png';
 
@@ -354,6 +355,56 @@ const SearchContainer = styled.div`
   @media (max-width: 768px) {
     margin-left: 0.75rem;
   }
+`;
+
+const AuthActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: 1rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const AuthActionButton = styled(Link)`
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  transition: all 0.25s ease;
+
+  &:hover {
+    color: var(--primary);
+    background: rgba(0, 255, 136, 0.14);
+    transform: translateY(-1px);
+  }
+`;
+
+const LogoutButton = styled.button`
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+
+  &:hover {
+    color: var(--primary);
+    background: rgba(0, 255, 136, 0.08);
+    transform: translateY(-1px);
+  }
+`;
+
+const MobileAuthButton = styled(LogoutButton)`
+  width: calc(100% - 3rem);
+  margin: 0 1.5rem 1rem;
+  text-align: left;
 `;
 
 const SearchInput = styled.input`
@@ -722,6 +773,8 @@ const Header = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const { user, logout } = useContext(AuthContext);
+
   const menuItems = [
     {
       title: 'Company',
@@ -830,6 +883,14 @@ const Header = () => {
             </SearchResults>
           )}
         </SearchContainer>
+
+        <AuthActions>
+          {user ? (
+            <LogoutButton onClick={logout}>Logout</LogoutButton>
+          ) : (
+            <AuthActionButton to="/login">Login</AuthActionButton>
+          )}
+        </AuthActions>
         
         <MobileMenuButton onClick={() => {
           console.log('Mobile menu clicked, current state:', mobileMenuOpen);
@@ -906,6 +967,19 @@ const Header = () => {
                 <MobileNavLink to="/whitepapers">Whitepapers</MobileNavLink>
                 <MobileNavLink to="/documentation">Documentation</MobileNavLink>
                 <MobileNavLink to="/support">Support</MobileNavLink>
+                {user ? (
+                  <MobileAuthButton
+                    type="button"
+                    onClick={() => {
+                      logout();
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    Logout
+                  </MobileAuthButton>
+                ) : (
+                  <MobileNavLink to="/login">Login</MobileNavLink>
+                )}
               </MobileNavSection>
             </MobileNav>
             

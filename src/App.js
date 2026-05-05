@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Toaster } from 'react-hot-toast';
 import styled, { createGlobalStyle } from 'styled-components';
 import ChatBot from './components/ChatBot';
+import { AuthProvider } from './context/AuthContext';
 
 // API Configuration
 export const API_URL = process.env.REACT_APP_API_URL || import.meta.env?.VITE_API_URL || 'http://localhost:5000/api/v1';
@@ -48,6 +49,7 @@ const Development = lazy(() => import('./pages/Development'));
 const TechnicalSupport = lazy(() => import('./pages/Support'));
 const Training = lazy(() => import('./pages/Training'));
 const Maintenance = lazy(() => import('./pages/Maintenance'));
+const Login = lazy(() => import('./pages/Login'));
 
 // Global Styles
 const GlobalStyle = createGlobalStyle`
@@ -240,10 +242,11 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <HelmetProvider>
-        <GlobalStyle />
-        <Router>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <HelmetProvider>
+          <GlobalStyle />
+          <Router>
           <AppContainer>
             <Suspense fallback={<LoadingSpinner />}>
               <Header />
@@ -276,6 +279,7 @@ function App() {
                   <Route path="/cloud-services" element={<CloudServices />} />
                   <Route path="/digital-transformation" element={<DigitalTransformation />} />
                   <Route path="/security" element={<Security />} />
+                  <Route path="/login" element={<Login />} />
           
                   <Route path="/data-analytics" element={<DataAnalytics />} />
                   <Route path="/collaborators" element={<Collaborators />} />
@@ -305,6 +309,7 @@ function App() {
         />
       </HelmetProvider>
     </QueryClientProvider>
+    </AuthProvider>
   );
 }
 
