@@ -19,12 +19,33 @@ const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
+    
+    // Seed Admin User
+    await seedAdmin();
   } catch (error) {
     console.error(`Error: ${error.message}`);
     process.exit(1);
   }
 };
-connectDB();
+
+const seedAdmin = async () => {
+  try {
+    const adminEmail = 'ascollege82@gmail.com';
+    const existingAdmin = await User.findOne({ email: adminEmail });
+    
+    if (!existingAdmin) {
+      await User.create({
+        name: 'Admin',
+        email: adminEmail,
+        password: '123',
+        role: 'admin'
+      });
+      console.log('Admin user seeded successfully!');
+    }
+  } catch (err) {
+    console.error('Error seeding admin:', err.message);
+  }
+};
 
 // ==========================================
 // MODELS
@@ -94,6 +115,9 @@ const ApplicationSchema = new mongoose.Schema({
 });
 ApplicationSchema.index({ job: 1, student: 1 }, { unique: true });
 const Application = mongoose.model('Application', ApplicationSchema);
+
+// Initialize DB after models are defined
+connectDB();
 
 
 // ==========================================
