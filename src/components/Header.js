@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSearch, FiMenu, FiX, FiChevronDown, FiUser, FiGlobe, FiArrowRight } from 'react-icons/fi';
+import { toast } from 'react-hot-toast';
 
 import LundLogo from '../assets/maven.png';
 

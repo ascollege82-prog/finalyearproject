@@ -274,7 +274,12 @@ app.post('/api/v1/jobs', protect, authorize('recruiter', 'admin'), async (req, r
     res.status(201).json({ success: true, data: job });
   } catch (err) { res.status(400).json({ success: false, error: err.message }); }
 });
-
+app.get('/', (req, res) => {
+    res.status(200).json({ 
+        success: true, 
+        message: "Server is running" 
+    });
+});
 app.get('/api/v1/jobs/:id', async (req, res) => {
   try {
     const job = await Job.findById(req.params.id).populate({ path: 'company', select: 'name location logo description' });
